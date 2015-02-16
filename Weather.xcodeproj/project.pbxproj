@@ -13,6 +13,13 @@
 		A389276F1A8FC40C00E568C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A389276E1A8FC40C00E568C4 /* Images.xcassets */; };
 		A38927721A8FC40C00E568C4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A38927701A8FC40C00E568C4 /* LaunchScreen.xib */; };
 		A389277E1A8FC40C00E568C4 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A389277D1A8FC40C00E568C4 /* WeatherTests.swift */; };
+		A3DF11581A916E96000DD8F9 /* sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11571A916E96000DD8F9 /* sky.jpg */; };
+		A3DF115A1A9173D5000DD8F9 /* rainbow sky.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */; };
+		A3DF115C1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */; };
+		A3DF115E1A91A504000DD8F9 /* snow.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF115D1A91A504000DD8F9 /* snow.jpeg */; };
+		A3DF11601A91A5D0000DD8F9 /* rain.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF115F1A91A5D0000DD8F9 /* rain.jpg */; };
+		A3DF11621A91A5DB000DD8F9 /* sunny.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11611A91A5DB000DD8F9 /* sunny.jpg */; };
+		A3DF11641A91A5FD000DD8F9 /* cloudy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +43,13 @@
 		A38927771A8FC40C00E568C4 /* WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A389277C1A8FC40C00E568C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A389277D1A8FC40C00E568C4 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
+		A3DF11571A916E96000DD8F9 /* sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky.jpg; sourceTree = "<group>"; };
+		A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "rainbow sky.jpeg"; sourceTree = "<group>"; };
+		A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Blue-Sky-Wallpaper-.jpg"; sourceTree = "<group>"; };
+		A3DF115D1A91A504000DD8F9 /* snow.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snow.jpeg; sourceTree = "<group>"; };
+		A3DF115F1A91A5D0000DD8F9 /* rain.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rain.jpg; sourceTree = "<group>"; };
+		A3DF11611A91A5DB000DD8F9 /* sunny.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sunny.jpg; sourceTree = "<group>"; };
+		A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloudy.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +104,13 @@
 		A38927651A8FC40C00E568C4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A3DF11571A916E96000DD8F9 /* sky.jpg */,
+				A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */,
+				A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */,
+				A3DF115D1A91A504000DD8F9 /* snow.jpeg */,
+				A3DF115F1A91A5D0000DD8F9 /* rain.jpg */,
+				A3DF11611A91A5DB000DD8F9 /* sunny.jpg */,
+				A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */,
 				A38927661A8FC40C00E568C4 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -193,7 +214,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A389276D1A8FC40C00E568C4 /* Main.storyboard in Resources */,
+				A3DF11621A91A5DB000DD8F9 /* sunny.jpg in Resources */,
+				A3DF11601A91A5D0000DD8F9 /* rain.jpg in Resources */,
+				A3DF11641A91A5FD000DD8F9 /* cloudy.jpg in Resources */,
+				A3DF115E1A91A504000DD8F9 /* snow.jpeg in Resources */,
+				A3DF11581A916E96000DD8F9 /* sky.jpg in Resources */,
+				A3DF115A1A9173D5000DD8F9 /* rainbow sky.jpeg in Resources */,
 				A38927721A8FC40C00E568C4 /* LaunchScreen.xib in Resources */,
+				A3DF115C1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg in Resources */,
 				A389276F1A8FC40C00E568C4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +433,7 @@
 				A38927831A8FC40C00E568C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A38927841A8FC40C00E568C4 /* Build configuration list for PBXNativeTarget "WeatherTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +442,7 @@
 				A38927861A8FC40C00E568C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
