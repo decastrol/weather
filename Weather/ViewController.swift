@@ -7,19 +7,25 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
     var url = NSURL(string: "")
     var weather = ""
+    var manager = CLLocationManager()
+    var userLocationCity = ""
     
-    @IBOutlet var leftImage: UIImageView!
-    @IBOutlet var rightImage: UIImageView!
+    @IBOutlet var backGroundImage: UIImageView!
     
     @IBOutlet var cityTextField: UITextField!
     @IBOutlet var cityName: UILabel!
     @IBOutlet var forecastLabel: UILabel!
+    
     @IBAction func findButtonPressed(sender: AnyObject) {
+        
+        self.view.endEditing(true)
+        if cityTextField.text == "" { showError() } else {
         var newCityName = cityTextField.text.stringByReplacingOccurrencesOfString(" ", withString: "-")
         
         var cityArray = newCityName.componentsSeparatedByString("-")
@@ -43,12 +49,24 @@ class ViewController: UIViewController {
                     var urlContentArray = urlContent.componentsSeparatedByString("<span class=\"phrase\">")
                     
                     if urlContentArray.count > 1 {
-                        //println(urlContentArray[1])
                         var secondContentArray = urlContentArray[1].componentsSeparatedByString("</span>")
-                        //println(secondContentArray[0])
+                       
                         self.weather = secondContentArray[0] as String
-                        //self.weather = self.weather.stringByReplacingOccurrencesOfString(".", withString: "\n")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString(".", withString: "\n\n")
                         self.weather = self.weather.stringByReplacingOccurrencesOfString("&deg;", withString: "º")
+                        
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Mon", withString: "Monday")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Tue", withString: "Tuesday")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Wed", withString: "Wednesday")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Thu", withString: "Thursday")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Fri", withString: "Friday")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Sat", withString: "Saturday")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Sun", withString: "Sunday")
+                        
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" W ", withString: " West ")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" N ", withString: " North ")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" S ", withString: " South ")
+                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" E ", withString: " East ")
                         
                     } else {
                         urlError = true
@@ -62,6 +80,7 @@ class ViewController: UIViewController {
                     self.showError()
                 } else {
                     println(self.weather)
+                    
                     self.forecastLabel.text = self.weather
                     self.cityName.text = self.cityTextField.text
                     self.cityTextField.text = ""
@@ -69,38 +88,47 @@ class ViewController: UIViewController {
                     var newWeather = NSString(string: self.weather)
                     
                     if newWeather.containsString("snow") {
-                        self.leftImage.image = UIImage(named: "snow.jpeg")
-                        self.rightImage.image = UIImage(named: "snow.jpeg")
+                         self.updateBackgroundImage("snow.jpeg")
                     }
                     else if newWeather.containsString("rain") {
-                        self.leftImage.image = UIImage(named: "rain.jpg")
-                        self.rightImage.image = UIImage(named: "rain.jpg")
+                        self.updateBackgroundImage("rain_cloud.jpg")
+                        self.forecastLabel.textColor = UIColor.blackColor()
                     }
                     else if newWeather.containsString("cloudy") {
-                        self.leftImage.image = UIImage(named: "cloudy.jpg")
-                        self.rightImage.image = UIImage(named: "cloudy.jpg")
+                        self.updateBackgroundImage("cloudy.jpg")
+                        self.forecastLabel.textColor = UIColor.blackColor()
                     }
                     else if newWeather.containsString("sun") {
-                        self.leftImage.image = UIImage(named: "sunny.jpg")
-                        self.rightImage.image = UIImage(named: "sunny.jpg")
+                        self.updateBackgroundImage("sunny.jpg")
                     }
                     else {
-                        self.leftImage.image = nil
-                        self.rightImage.image = nil
+                        self.backGroundImage.image = UIImage(named: "Blue-Sky-Wallpaper-.jpg")
+                        self.forecastLabel.textColor = UIColor.darkGrayColor()
                     }
                     
+                    self.forecastLabel.alpha = 0
+                    self.cityName.alpha = 0
+                    
+
+                    UIView.animateWithDuration(1, animations: {
+                        self.forecastLabel.alpha = 1
+                        self.cityName.alpha = 1
+                        
+                    })
                 }
                 }
             })
             task.resume()
+            
         }
         else {
             showError()
         }
+        }
         
     }
     func showError() {
-        forecastLabel.text = "Was not able to find forecast for " + cityTextField.text + ". \nTry deleting any spaces in the search field"
+        forecastLabel.text = "Was not able to find forecast for " + cityTextField.text + "."
         cityName.text = "Error"
         self.view.endEditing(true)
     }
@@ -109,8 +137,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        cityName.text = "Put in a city name"
+        //Core Location
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+        
+        cityName.text = "Please enter a city name"
         forecastLabel.text = ""
+        forecastLabel.alpha = 0
+        
         
             }
 
@@ -123,5 +159,36 @@ class ViewController: UIViewController {
         self.view.endEditing(true)
     }
 
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var userLocation: CLLocation = locations[0] as CLLocation
+        
+        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {
+            (placemark, error) in
+            if (error != nil) {
+                println(error)
+            }
+            else {
+                let p: CLPlacemark = CLPlacemark(placemark: placemark[0] as CLPlacemark)
+
+                self.userLocationCity = p.locality
+                println(p.locality)
+            }
+        })
+    }
+    @IBAction func myLocationActivate(sender: AnyObject) {
+        cityTextField.text = userLocationCity
+    }
+    func updateBackgroundImage(bImage: String) {
+        UIView.animateWithDuration(1, animations: {
+            self.backGroundImage.alpha = 0
+        })
+        backGroundImage.image = UIImage(named: bImage)
+        UIView.animateWithDuration(1, animations: {
+        self.backGroundImage.alpha = 0.8
+            self.forecastLabel.textColor = UIColor.darkGrayColor()
+        })
+        
+        
+    }
 }
 

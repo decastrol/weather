@@ -17,9 +17,11 @@
 		A3DF115A1A9173D5000DD8F9 /* rainbow sky.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */; };
 		A3DF115C1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */; };
 		A3DF115E1A91A504000DD8F9 /* snow.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF115D1A91A504000DD8F9 /* snow.jpeg */; };
-		A3DF11601A91A5D0000DD8F9 /* rain.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF115F1A91A5D0000DD8F9 /* rain.jpg */; };
 		A3DF11621A91A5DB000DD8F9 /* sunny.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11611A91A5DB000DD8F9 /* sunny.jpg */; };
 		A3DF11641A91A5FD000DD8F9 /* cloudy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */; };
+		A3DF11FE1A9431B7000DD8F9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DF11FD1A9431B7000DD8F9 /* CoreLocation.framework */; };
+		A3DF12001A944105000DD8F9 /* rain.png in Resources */ = {isa = PBXBuildFile; fileRef = A3DF11FF1A944105000DD8F9 /* rain.png */; };
+		A3DF12021A94418A000DD8F9 /* rain_cloud.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A3DF12011A94418A000DD8F9 /* rain_cloud.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,9 +49,11 @@
 		A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "rainbow sky.jpeg"; sourceTree = "<group>"; };
 		A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Blue-Sky-Wallpaper-.jpg"; sourceTree = "<group>"; };
 		A3DF115D1A91A504000DD8F9 /* snow.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snow.jpeg; sourceTree = "<group>"; };
-		A3DF115F1A91A5D0000DD8F9 /* rain.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rain.jpg; sourceTree = "<group>"; };
 		A3DF11611A91A5DB000DD8F9 /* sunny.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sunny.jpg; sourceTree = "<group>"; };
 		A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cloudy.jpg; sourceTree = "<group>"; };
+		A3DF11FD1A9431B7000DD8F9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A3DF11FF1A944105000DD8F9 /* rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rain.png; sourceTree = "<group>"; };
+		A3DF12011A94418A000DD8F9 /* rain_cloud.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rain_cloud.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3DF11FE1A9431B7000DD8F9 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +78,7 @@
 		A38927591A8FC40C00E568C4 = {
 			isa = PBXGroup;
 			children = (
+				A3DF11FD1A9431B7000DD8F9 /* CoreLocation.framework */,
 				A38927641A8FC40C00E568C4 /* Weather */,
 				A389277A1A8FC40C00E568C4 /* WeatherTests */,
 				A38927631A8FC40C00E568C4 /* Products */,
@@ -108,7 +114,8 @@
 				A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */,
 				A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */,
 				A3DF115D1A91A504000DD8F9 /* snow.jpeg */,
-				A3DF115F1A91A5D0000DD8F9 /* rain.jpg */,
+				A3DF12011A94418A000DD8F9 /* rain_cloud.jpg */,
+				A3DF11FF1A944105000DD8F9 /* rain.png */,
 				A3DF11611A91A5DB000DD8F9 /* sunny.jpg */,
 				A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */,
 				A38927661A8FC40C00E568C4 /* Info.plist */,
@@ -214,10 +221,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A389276D1A8FC40C00E568C4 /* Main.storyboard in Resources */,
+				A3DF12021A94418A000DD8F9 /* rain_cloud.jpg in Resources */,
 				A3DF11621A91A5DB000DD8F9 /* sunny.jpg in Resources */,
-				A3DF11601A91A5D0000DD8F9 /* rain.jpg in Resources */,
 				A3DF11641A91A5FD000DD8F9 /* cloudy.jpg in Resources */,
 				A3DF115E1A91A504000DD8F9 /* snow.jpeg in Resources */,
+				A3DF12001A944105000DD8F9 /* rain.png in Resources */,
 				A3DF11581A916E96000DD8F9 /* sky.jpg in Resources */,
 				A3DF115A1A9173D5000DD8F9 /* rainbow sky.jpeg in Resources */,
 				A38927721A8FC40C00E568C4 /* LaunchScreen.xib in Resources */,
