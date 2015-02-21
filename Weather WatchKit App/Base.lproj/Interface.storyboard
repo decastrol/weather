@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6750" systemVersion="14A388b" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6735"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
+    </dependencies>
+    <scenes>
+        <!--controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller identifier="controller" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Weather_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <group width="1" alignment="left" id="ACq-Ov-FcJ">
+                            <items>
+                                <label width="133" height="24" alignment="left" text="Loading" textAlignment="center" minimumScaleFactor="0.60000000000000009" id="RGD-oI-hfW">
+                                    <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                </label>
+                            </items>
+                        </group>
+                        <separator alignment="left" id="Mzr-dZ-etu"/>
+                        <imageView width="135" height="37" alignment="center" contentMode="scaleAspectFill" id="fea-Sl-Uas"/>
+                        <label width="130" height="76" alignment="left" text="Loading" numberOfLines="0" minimumScaleFactor="0.20000000000000015" id="vUQ-iU-UXA">
+                            <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                        </label>
+                    </items>
+                    <connections>
+                        <outlet property="cityLabel" destination="RGD-oI-hfW" id="ANU-Wj-rop"/>
+                        <outlet property="weatherImage" destination="fea-Sl-Uas" id="jXX-HT-VZC"/>
+                        <outlet property="weatherLabel" destination="vUQ-iU-UXA" id="KDP-4o-cDn"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="75" y="203"/>
+        </scene>
+        <!--Glance Interface Controller-->
+        <scene sceneID="rjY-Ar-IMT">
+            <objects>
+                <glanceController spacing="0.0" id="Sv0-Ai-Zie" customClass="GlanceController" customModule="Weather_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <group alignment="left" id="gv7-I2-MZq">
+                            <items>
+                                <label width="136" height="49" alignment="left" text="Label" textAlignment="center" id="epL-Rw-eEH"/>
+                            </items>
+                        </group>
+                        <group alignment="left" id="eew-Gs-W6Y">
+                            <items>
+                                <label width="136" height="117" alignment="left" alpha="0.69999999999999973" text="Label" numberOfLines="0" id="bfO-KC-j3J">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </label>
+                            </items>
+                        </group>
+                    </items>
+                    <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
+                    <connections>
+                        <outlet property="watchCityLabel" destination="epL-Rw-eEH" id="Lzi-by-GrD"/>
+                        <outlet property="watchWeatherLabel" destination="bfO-KC-j3J" id="JTM-ru-K98"/>
+                    </connections>
+                </glanceController>
+            </objects>
+            <point key="canvasLocation" x="164" y="514"/>
+        </scene>
+    </scenes>
+</document>

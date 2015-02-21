@@ -25,108 +25,109 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func findButtonPressed(sender: AnyObject) {
         
         self.view.endEditing(true)
+        
         if cityTextField.text == "" { showError() } else {
-        var newCityName = cityTextField.text.stringByReplacingOccurrencesOfString(" ", withString: "-")
-        
-        var cityArray = newCityName.componentsSeparatedByString("-")
-        
-        if cityArray[cityArray.count - 1] == ""  {
-            newCityName = newCityName.substringToIndex(newCityName.endIndex.predecessor())
-        }
-        if cityArray[0] == "" {
-            newCityName = newCityName.substringFromIndex(newCityName.startIndex.successor())
-        }
-        
-        url = NSURL(string: "http://www.weather-forecast.com/locations/\(newCityName)/forecasts/latest")
-        //println(url)
-        if url != nil {
-            var task = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler:  { (data, response, error) -> Void in
-                var urlError = false
-                
-                if error == nil {
-                    var urlContent = NSString(data: data, encoding: NSUTF8StringEncoding) as NSString!
-                        //println(urlContent)
-                    var urlContentArray = urlContent.componentsSeparatedByString("<span class=\"phrase\">")
+            var newCityName = cityTextField.text.stringByReplacingOccurrencesOfString(" ", withString: "-")
+            
+            var cityArray = newCityName.componentsSeparatedByString("-")
+            
+            if cityArray[cityArray.count - 1] == ""  {
+                newCityName = newCityName.substringToIndex(newCityName.endIndex.predecessor())
+            }
+            if cityArray[0] == "" {
+                newCityName = newCityName.substringFromIndex(newCityName.startIndex.successor())
+            }
+            
+            url = NSURL(string: "http://www.weather-forecast.com/locations/\(newCityName)/forecasts/latest")
+            //println(url)
+            if url != nil {
+                var task = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler:  { (data, response, error) -> Void in
+                    var urlError = false
                     
-                    if urlContentArray.count > 1 {
-                        var secondContentArray = urlContentArray[1].componentsSeparatedByString("</span>")
-                       
-                        self.weather = secondContentArray[0] as String
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString(".", withString: "\n\n")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("&deg;", withString: "º")
+                    if error == nil {
+                        var urlContent = NSString(data: data, encoding: NSUTF8StringEncoding) as NSString!
+                        //println(urlContent)
+                        var urlContentArray = urlContent.componentsSeparatedByString("<span class=\"phrase\">")
                         
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Mon", withString: "Monday")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Tue", withString: "Tuesday")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Wed", withString: "Wednesday")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Thu", withString: "Thursday")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Fri", withString: "Friday")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Sat", withString: "Saturday")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString("Sun", withString: "Sunday")
-                        
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" W ", withString: " West ")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" N ", withString: " North ")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" S ", withString: " South ")
-                        self.weather = self.weather.stringByReplacingOccurrencesOfString(" E ", withString: " East ")
+                        if urlContentArray.count > 1 {
+                            var secondContentArray = urlContentArray[1].componentsSeparatedByString("</span>")
+                            
+                            self.weather = secondContentArray[0] as String
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(".", withString: "\n\n")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("&deg;", withString: "º")
+                            
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Mon", withString: "Monday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Tue", withString: "Tuesday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Wed", withString: "Wednesday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Thu", withString: "Thursday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Fri", withString: "Friday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Sat", withString: "Saturday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Sun", withString: "Sunday")
+                            
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" W ", withString: " West ")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" N ", withString: " North ")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" S ", withString: " South ")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" E ", withString: " East ")
+                            
+                        } else {
+                            urlError = true
+                        }
                         
                     } else {
-                        urlError = true
+                       urlError = true
                     }
-                    
-                } else {
-                    urlError = true
-                }
-                dispatch_async(dispatch_get_main_queue() ) {
-                if urlError == true {
-                    self.showError()
-                } else {
-                    println(self.weather)
-                    
-                    self.forecastLabel.text = self.weather
-                    self.cityName.text = self.cityTextField.text
-                    self.cityTextField.text = ""
-                    
-                    var newWeather = NSString(string: self.weather)
-                    
-                    if newWeather.containsString("snow") {
-                         self.updateBackgroundImage("snow.jpeg")
+                    dispatch_async(dispatch_get_main_queue() ) {
+                        if urlError == true {
+                            self.showError()
+                        } else {
+                            println(self.weather)
+                            
+                            self.forecastLabel.text = self.weather
+                            self.cityName.text = self.cityTextField.text
+                            self.cityTextField.text = ""
+                            
+                            var newWeather = NSString(string: self.weather)
+                            
+                            if newWeather.containsString("snow") {
+                                self.updateBackgroundImage("snow.jpeg")
+                            }
+                            else if newWeather.containsString("rain") {
+                                self.updateBackgroundImage("rain_cloud.jpg")
+                                self.forecastLabel.textColor = UIColor.blackColor()
+                            }
+                            else if newWeather.containsString("cloudy") {
+                                self.updateBackgroundImage("cloudy.jpg")
+                                self.forecastLabel.textColor = UIColor.blackColor()
+                            }
+                            else if newWeather.containsString("sun") {
+                                self.updateBackgroundImage("sunny.jpg")
+                            }
+                            else {
+                                self.backGroundImage.image = UIImage(named: "Blue-Sky-Wallpaper-.jpg")
+                                self.forecastLabel.textColor = UIColor.blackColor()
+                            }
+                            
+                            self.forecastLabel.alpha = 0
+                            self.cityName.alpha = 0
+                            
+                            
+                            UIView.animateWithDuration(1, animations: {
+                                self.forecastLabel.alpha = 1
+                                self.cityName.alpha = 1
+                                
+                           })
+                        }
                     }
-                    else if newWeather.containsString("rain") {
-                        self.updateBackgroundImage("rain_cloud.jpg")
-                        self.forecastLabel.textColor = UIColor.blackColor()
-                    }
-                    else if newWeather.containsString("cloudy") {
-                        self.updateBackgroundImage("cloudy.jpg")
-                        self.forecastLabel.textColor = UIColor.blackColor()
-                    }
-                    else if newWeather.containsString("sun") {
-                        self.updateBackgroundImage("sunny.jpg")
-                    }
-                    else {
-                        self.backGroundImage.image = UIImage(named: "Blue-Sky-Wallpaper-.jpg")
-                        self.forecastLabel.textColor = UIColor.darkGrayColor()
-                    }
-                    
-                    self.forecastLabel.alpha = 0
-                    self.cityName.alpha = 0
-                    
-
-                    UIView.animateWithDuration(1, animations: {
-                        self.forecastLabel.alpha = 1
-                        self.cityName.alpha = 1
-                        
-                    })
-                }
-                }
-            })
-            task.resume()
-            
+                })
+                task.resume()
+                
+            }
+            else {
+                showError()
+            }
         }
-        else {
-            showError()
-        }
-        }
-        
     }
+
     func showError() {
         forecastLabel.text = "Was not able to find forecast for " + cityTextField.text + "."
         cityName.text = "Error"
@@ -157,6 +158,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.view.endEditing(true)
+        
     }
 
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
@@ -185,10 +187,76 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         backGroundImage.image = UIImage(named: bImage)
         UIView.animateWithDuration(1, animations: {
         self.backGroundImage.alpha = 0.8
-            self.forecastLabel.textColor = UIColor.darkGrayColor()
+            self.forecastLabel.textColor = UIColor.blackColor()
         })
         
-        
     }
+    func getWeather(input: String) -> String {
+        if input == "" { println("nothing in the search box") } else {
+            var newCityName = input.stringByReplacingOccurrencesOfString(" ", withString: "-")
+            
+            var cityArray = newCityName.componentsSeparatedByString("-")
+            
+            if cityArray[cityArray.count - 1] == ""  {
+                newCityName = newCityName.substringToIndex(newCityName.endIndex.predecessor())
+            }
+            if cityArray[0] == "" {
+                newCityName = newCityName.substringFromIndex(newCityName.startIndex.successor())
+            }
+            
+            url = NSURL(string: "http://www.weather-forecast.com/locations/\(newCityName)/forecasts/latest")
+            //println(url)
+            if url != nil {
+                var task = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler:  { (data, response, error) -> Void in
+                    var urlError = false
+                    
+                    if error == nil {
+                        var urlContent = NSString(data: data, encoding: NSUTF8StringEncoding) as NSString!
+                        //println(urlContent)
+                        var urlContentArray = urlContent.componentsSeparatedByString("<span class=\"phrase\">")
+                        
+                        if urlContentArray.count > 1 {
+                            var secondContentArray = urlContentArray[1].componentsSeparatedByString("</span>")
+                            
+                            self.weather = secondContentArray[0] as String
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(".", withString: "\n\n")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("&deg;", withString: "º")
+                            
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Mon", withString: "Monday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Tue", withString: "Tuesday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Wed", withString: "Wednesday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Thu", withString: "Thursday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Fri", withString: "Friday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Sat", withString: "Saturday")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString("Sun", withString: "Sunday")
+                            
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" W ", withString: " West ")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" N ", withString: " North ")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" S ", withString: " South ")
+                            self.weather = self.weather.stringByReplacingOccurrencesOfString(" E ", withString: " East ")
+                            
+                        } else {
+                            urlError = true
+                        }
+                        
+                    } else {
+                        urlError = true
+                    }
+                    if urlError == true {
+                        self.showError()
+                    } else {
+                        println(self.weather)
+                        
+                    }
+                })
+                task.resume()
+                
+            }
+            else {
+                showError()
+            }
+        }
+        return weather
+}
 }
 
