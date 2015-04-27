@@ -229,20 +229,8 @@
 		A38927651A8FC40C00E568C4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A3FC03BD1A98ED32004FB53E /* 29ptWeatherIcon.png */,
-				A3FC03C31A98F06D004FB53E /* 29ptWeatherIcon3x.png */,
-				A3FC03BE1A98ED32004FB53E /* 40ptWeatherIcon.png */,
-				A3FC03C51A98F07A004FB53E /* 40ptWeatherIcon3x.png */,
-				A3FC03BF1A98ED32004FB53E /* 60ptWeatherIcon.png */,
-				A3FC03C71A98F086004FB53E /* 60ptWeatherIcon3x.png */,
-				A3DF11571A916E96000DD8F9 /* sky.jpg */,
-				A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */,
-				A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */,
-				A3DF115D1A91A504000DD8F9 /* snow.jpeg */,
-				A3DF12011A94418A000DD8F9 /* rain_cloud.jpg */,
-				A3DF11FF1A944105000DD8F9 /* rain.png */,
-				A3DF11611A91A5DB000DD8F9 /* sunny.jpg */,
-				A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */,
+				A3FC03C91A98FC85004FB53E /* icons */,
+				A3FC03CA1A98FCA9004FB53E /* weatherImages */,
 				A38927661A8FC40C00E568C4 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -263,6 +251,34 @@
 				A389277C1A8FC40C00E568C4 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A3FC03C91A98FC85004FB53E /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				A3FC03BD1A98ED32004FB53E /* 29ptWeatherIcon.png */,
+				A3FC03C31A98F06D004FB53E /* 29ptWeatherIcon3x.png */,
+				A3FC03BE1A98ED32004FB53E /* 40ptWeatherIcon.png */,
+				A3FC03C51A98F07A004FB53E /* 40ptWeatherIcon3x.png */,
+				A3FC03BF1A98ED32004FB53E /* 60ptWeatherIcon.png */,
+				A3FC03C71A98F086004FB53E /* 60ptWeatherIcon3x.png */,
+			);
+			name = icons;
+			sourceTree = "<group>";
+		};
+		A3FC03CA1A98FCA9004FB53E /* weatherImages */ = {
+			isa = PBXGroup;
+			children = (
+				A3DF11571A916E96000DD8F9 /* sky.jpg */,
+				A3DF11591A9173D5000DD8F9 /* rainbow sky.jpeg */,
+				A3DF115B1A91741F000DD8F9 /* Blue-Sky-Wallpaper-.jpg */,
+				A3DF115D1A91A504000DD8F9 /* snow.jpeg */,
+				A3DF12011A94418A000DD8F9 /* rain_cloud.jpg */,
+				A3DF11FF1A944105000DD8F9 /* rain.png */,
+				A3DF11611A91A5DB000DD8F9 /* sunny.jpg */,
+				A3DF11631A91A5FD000DD8F9 /* cloudy.jpg */,
+			);
+			name = weatherImages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,6 +368,7 @@
 					};
 					A3098D6A1A96ADB6001FA6FE = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 942C2ZCGRF;
 					};
 					A38927611A8FC40C00E568C4 = {
 						CreatedOnToolsVersion = 6.1.1;

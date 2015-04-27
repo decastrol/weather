@@ -13,7 +13,7 @@ import CoreLocation
 
 class InterfaceController: WKInterfaceController, CLLocationManagerDelegate {
     var manager = CLLocationManager()
-    var userLocationCiy = String()
+    var userLocationCity = String()
     var vc = ViewController()
     var watchWeather = String()
     var arrayWeather = [String()]
@@ -43,8 +43,29 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate {
         super.didDeactivate()
     }
     
+    @IBAction func searchButton() {
+        self.manager.stopUpdatingLocation()
+        self.weatherLabel.setText("Loading")
+        self.cityLabel.setText("Loading")
+        presentTextInputControllerWithSuggestions([self.userLocationCity, "Cupertino", "New York"], allowedInputMode: WKTextInputMode.Plain) { (object: [AnyObject]!) -> Void in
+            if object != nil {
+                
+            var userInput = object[0] as! String
+            var userWeather = self.vc.getWeather(userInput)
+                
+            var userArrayWeather = userWeather.componentsSeparatedByString("\n\n")
+            var newUserWeather = "\(userArrayWeather[0])"
+                
+            self.changeImage(userArrayWeather[0])
+                self.cityLabel.setText(userInput)
+            self.weatherLabel.setText(self.vc.getWeather(userInput))
+            } else {
+                self.manager.startUpdatingLocation()
+            }
+        }
+    }
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var userLocation: CLLocation = locations[0] as CLLocation
+        var userLocation: CLLocation = locations[0] as! CLLocation
         
         CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {
             (placemark, error) in
@@ -52,12 +73,12 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate {
                 println(error)
             }
             else {
-                let p: CLPlacemark = CLPlacemark(placemark: placemark[0] as CLPlacemark)
+                let p: CLPlacemark = CLPlacemark(placemark: placemark[0] as! CLPlacemark)
                 
-                self.userLocationCiy = p.locality
+                self.userLocationCity = p.locality
                 println(p.locality)
-                self.watchWeather = self.vc.getWeather(self.userLocationCiy)
-                self.cityLabel.setText(self.userLocationCiy)
+                self.watchWeather = self.vc.getWeather(self.userLocationCity)
+                self.cityLabel.setText(self.userLocationCity)
                 
                 self.arrayWeather = self.watchWeather.componentsSeparatedByString("\n\n")
                 self.newWatchWeather = "\(self.arrayWeather[0])"
@@ -67,26 +88,28 @@ class InterfaceController: WKInterfaceController, CLLocationManagerDelegate {
                 
             }
         })
+        changeImage(newWatchWeather)
         
-        var convertedWatchWeather: NSString = NSString(string: newWatchWeather)
-        self.weatherImage.setImage(UIImage(named:"Blue-Sky-Wallpaper-.jpg"))
         
-        if convertedWatchWeather.containsString("snow") {
-            self.weatherImage.setImage(UIImage(named:"snow.jpeg"))
-        }
-        else if convertedWatchWeather.containsString("rain") {
-            self.weatherImage.setImage(UIImage(named:"rain_cloud.jpg"))
-        }
-        else if convertedWatchWeather.containsString("cloudy") {
-            self.weatherImage.setImage(UIImage(named:"cloudy.jpg"))
-        }
-        else if convertedWatchWeather.containsString("sun") {
-            self.weatherImage.setImage(UIImage(named:"sunny.jpg"))
-        }
-        else {
-            self.weatherImage.setImage(UIImage(named: "Blue-Sky-Wallpaper-.jpg"))
-        }
-
 }
-
+    func changeImage(weather: String) {
+    var convertedWatchWeather: NSString = NSString(string: weather)
+    self.weatherImage.setImage(UIImage(named:"Blue-Sky-Wallpaper-.jpg"))
+    
+    if convertedWatchWeather.containsString("snow") {
+    self.weatherImage.setImage(UIImage(named:"snow.jpeg"))
+    }
+    else if convertedWatchWeather.containsString("rain") {
+    self.weatherImage.setImage(UIImage(named:"rain_cloud.jpg"))
+    }
+    else if convertedWatchWeather.containsString("cloudy") {
+    self.weatherImage.setImage(UIImage(named:"cloudy.jpg"))
+    }
+    else if convertedWatchWeather.containsString("sun") {
+    self.weatherImage.setImage(UIImage(named:"sunny.jpg"))
+    }
+    else {
+    self.weatherImage.setImage(UIImage(named: "Blue-Sky-Wallpaper-.jpg"))
+    }
+    }
 }

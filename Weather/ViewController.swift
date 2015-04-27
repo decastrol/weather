@@ -15,12 +15,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var weather = ""
     var manager = CLLocationManager()
     var userLocationCity = ""
+    var maxTemperature = String()
+    var minTemperature = String()
     
     @IBOutlet var backGroundImage: UIImageView!
     
     @IBOutlet var cityTextField: UITextField!
     @IBOutlet var cityName: UILabel!
     @IBOutlet var forecastLabel: UILabel!
+    @IBOutlet var maxTemp: UILabel!
+    @IBOutlet var minTemp: UILabel!
     
     @IBAction func findButtonPressed(sender: AnyObject) {
         
@@ -38,7 +42,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 newCityName = newCityName.substringFromIndex(newCityName.startIndex.successor())
             }
             
-            url = NSURL(string: "http://www.weather-forecast.com/locations/\(newCityName)/forecasts/latest")
+            url = NSURL(string: "http://www.weather-forecast.com/locations/\(newCityName)/forecasts/latest/")
             //println(url)
             if url != nil {
                 var task = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler:  { (data, response, error) -> Void in
@@ -52,9 +56,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         if urlContentArray.count > 1 {
                             var secondContentArray = urlContentArray[1].componentsSeparatedByString("</span>")
                             
-                            self.weather = secondContentArray[0] as String
+                            self.weather = secondContentArray[0] as! String
+                            
+                            
+                            self.minTemp.hidden = false
+                            self.maxTemp.hidden = false
+                            
                             self.weather = self.weather.stringByReplacingOccurrencesOfString(".", withString: "\n\n")
                             self.weather = self.weather.stringByReplacingOccurrencesOfString("&deg;", withString: "º")
+                            
+                            var maxTemperatureFirst = self.weather.componentsSeparatedByString("max")
+                            var maxTemperatureSecond = maxTemperatureFirst[1].componentsSeparatedByString("C")
+                            self.maxTemperature = maxTemperatureSecond[0]
+                            
+                            
+                            var minTemperatureFirst = self.weather.componentsSeparatedByString(" min ")
+                            var minTemperatureSecond = minTemperatureFirst[1].componentsSeparatedByString("C")
+                            self.minTemperature = minTemperatureSecond[0]
+                            
                             
                             self.weather = self.weather.stringByReplacingOccurrencesOfString("Mon", withString: "Monday")
                             self.weather = self.weather.stringByReplacingOccurrencesOfString("Tue", withString: "Tuesday")
@@ -82,9 +101,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         } else {
                             println(self.weather)
                             
-                            self.forecastLabel.text = self.weather
-                            self.cityName.text = self.cityTextField.text
-                            self.cityTextField.text = ""
+                            
+                            
+                            
                             
                             var newWeather = NSString(string: self.weather)
                             
@@ -107,14 +126,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                                 self.forecastLabel.textColor = UIColor.blackColor()
                             }
                             
+                            UIView.animateWithDuration(0.5, animations: {
                             self.forecastLabel.alpha = 0
                             self.cityName.alpha = 0
+                            self.maxTemp.alpha = 0
+                            self.minTemp.alpha = 0
+                                })
                             
+                            self.maxTemp.text = self.maxTemperature + "C"
+                            self.minTemp.text = self.minTemperature + "C"
+                            
+                            self.forecastLabel.text = self.weather
+                            self.cityName.text = self.cityTextField.text
+                            self.cityTextField.text = ""
                             
                             UIView.animateWithDuration(1, animations: {
                                 self.forecastLabel.alpha = 1
                                 self.cityName.alpha = 1
-                                
+                                self.minTemp.alpha = 0.6
+                                self.maxTemp.alpha = 1
                            })
                         }
                     }
@@ -132,6 +162,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         forecastLabel.text = "Was not able to find forecast for " + cityTextField.text + "."
         cityName.text = "Error"
         self.view.endEditing(true)
+        minTemp.hidden = true
+        maxTemp.hidden = true
     }
     
     override func viewDidLoad() {
@@ -139,6 +171,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         
         //Core Location
+        minTemp.text = ""
+        maxTemp.text = ""
+        minTemp.hidden = true
+        maxTemp.hidden = true
+        
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
@@ -156,13 +193,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
-        
     }
 
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var userLocation: CLLocation = locations[0] as CLLocation
+        var userLocation: CLLocation = locations[0] as! CLLocation
         
         CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {
             (placemark, error) in
@@ -170,7 +207,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 println(error)
             }
             else {
-                let p: CLPlacemark = CLPlacemark(placemark: placemark[0] as CLPlacemark)
+                let p: CLPlacemark = CLPlacemark(placemark: placemark[0] as! CLPlacemark)
 
                 self.userLocationCity = p.locality
                 println(p.locality)
@@ -179,6 +216,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     @IBAction func myLocationActivate(sender: AnyObject) {
         cityTextField.text = userLocationCity
+        if cityTextField.text == "" {
+            var noLocationAlert = UIAlertView()
+            noLocationAlert.title = "Error"
+            noLocationAlert.message = "The location does not seem to be working at this time. \nPlease try again later."
+            noLocationAlert.addButtonWithTitle("Ok")
+            noLocationAlert.show()
+        }
     }
     func updateBackgroundImage(bImage: String) {
         UIView.animateWithDuration(1, animations: {
@@ -218,7 +262,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         if urlContentArray.count > 1 {
                             var secondContentArray = urlContentArray[1].componentsSeparatedByString("</span>")
                             
-                            self.weather = secondContentArray[0] as String
+                            self.weather = secondContentArray[0] as! String
                             self.weather = self.weather.stringByReplacingOccurrencesOfString(".", withString: "\n\n")
                             self.weather = self.weather.stringByReplacingOccurrencesOfString("&deg;", withString: "º")
                             

@@ -43,7 +43,7 @@ class GlanceController: WKInterfaceController, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var userLocation: CLLocation = locations[0] as CLLocation
+        var userLocation: CLLocation = locations[0] as! CLLocation
         
         CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {
             (placemark, error) in
@@ -51,7 +51,7 @@ class GlanceController: WKInterfaceController, CLLocationManagerDelegate {
                 println(error)
             }
             else {
-                let p: CLPlacemark = CLPlacemark(placemark: placemark[0] as CLPlacemark)
+                let p: CLPlacemark = CLPlacemark(placemark: placemark[0] as! CLPlacemark)
                 
                 self.userLocationCity = p.locality
                 println(p.locality)
